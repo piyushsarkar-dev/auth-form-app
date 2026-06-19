@@ -1,5 +1,7 @@
+"use client";
+
 const Login = () => {
-  return <>Enter</>;
+  return <></>;
 };
 
 export default Login;
