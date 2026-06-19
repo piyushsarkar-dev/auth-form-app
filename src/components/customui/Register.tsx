@@ -2,13 +2,18 @@
 
 import { registerSchema, RegisterSchemaType } from "@/lib/zodSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { LoaderIcon, SendIcon } from "lucide-react";
 import { Controller, useForm } from "react-hook-form";
 import { Button } from "../shadcnui/button";
 import { Field, FieldError, FieldLabel } from "../shadcnui/field";
 import { Input } from "../shadcnui/input";
 
 const Register = () => {
-  const { handleSubmit, control } = useForm({
+  const {
+    handleSubmit,
+    control,
+    formState: { isSubmitting },
+  } = useForm({
     resolver: zodResolver(registerSchema),
     defaultValues: {
       fullName: "",
@@ -79,7 +84,20 @@ const Register = () => {
             </Field>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button
+          type="submit"
+          disabled={isSubmitting}>
+          {isSubmitting ?
+            <>
+              <LoaderIcon />
+              Submitting
+            </>
+          : <>
+              <SendIcon />
+              Submit
+            </>
+          }
+        </Button>
       </form>
     </>
   );
