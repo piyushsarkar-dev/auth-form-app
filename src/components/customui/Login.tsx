@@ -5,17 +5,11 @@ import { loginSchema, LoginSchemaType } from "@/lib/zodSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAtomValue } from "jotai";
 import { Fingerprint, Loader } from "lucide-react";
-import { Metadata } from "next";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { Button } from "../shadcnui/button";
 import { Field, FieldError, FieldLabel } from "../shadcnui/field";
 import { Input } from "../shadcnui/input";
-
-export const metadata: Metadata = {
-  title: "Login | Auth Form App",
-  description: "Login page of Auth Form App",
-};
 
 const Login = () => {
   const register = useAtomValue(registerAtom);

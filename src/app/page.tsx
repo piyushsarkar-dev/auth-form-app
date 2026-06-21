@@ -8,8 +8,8 @@ import {
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Nextjs Starter Frontend",
-  description: "Production grade Next.js starter template",
+  title: "Login | Auth Form App",
+  description: "Login page of Auth Form App",
 };
 
 const page = () => {

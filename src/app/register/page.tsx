@@ -5,7 +5,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/shadcnui/card";
+import { Metadata } from "next";
 
+export const metadata: Metadata = {
+  title: "Register | Auth Form App",
+  description: "Register page of Auth Form App",
+};
 const page = () => {
   return (
     <section className="grid h-dvh place-items-center">

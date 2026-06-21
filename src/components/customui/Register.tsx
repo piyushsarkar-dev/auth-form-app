@@ -5,17 +5,11 @@ import { registerSchema, RegisterSchemaType } from "@/lib/zodSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSetAtom } from "jotai";
 import { Loader, UserRoundPlus } from "lucide-react";
-import { Metadata } from "next";
 import { useRouter } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
 import { Button } from "../shadcnui/button";
 import { Field, FieldError, FieldLabel } from "../shadcnui/field";
 import { Input } from "../shadcnui/input";
-
-export const metadata: Metadata = {
-  title: "Register | Auth Form App",
-  description: "Register page of Auth Form App",
-};
 
 const Register = () => {
   const setRegister = useSetAtom(registerAtom);
