@@ -5,18 +5,26 @@ import { registerSchema, RegisterSchemaType } from "@/lib/zodSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSetAtom } from "jotai";
 import { Loader, UserRoundPlus } from "lucide-react";
+import { Metadata } from "next";
+import { useRouter } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
-
 import { Button } from "../shadcnui/button";
 import { Field, FieldError, FieldLabel } from "../shadcnui/field";
 import { Input } from "../shadcnui/input";
 
+export const metadata: Metadata = {
+  title: "Register | Auth Form App",
+  description: "Register page of Auth Form App",
+};
+
 const Register = () => {
   const setRegister = useSetAtom(registerAtom);
+  const { push } = useRouter();
 
   const {
     handleSubmit,
     control,
+    reset,
     formState: { isSubmitting },
   } = useForm<RegisterSchemaType>({
     resolver: zodResolver(registerSchema),
@@ -30,10 +38,9 @@ const Register = () => {
 
   const handleRegister = async (data: RegisterSchemaType) => {
     await new Promise((resolve) => setTimeout(resolve, 1500));
-
     setRegister(data);
-
-    console.log(data);
+    reset();
+    push("/");
   };
 
   return (
