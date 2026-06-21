@@ -1,4 +1,4 @@
-import Login from "@/components/customui/Login";
+import Register from "@/components/customui/Register";
 import {
   Card,
   CardContent,
@@ -8,19 +8,18 @@ import {
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Login | Auth Form App",
-  description: "Login page of Auth Form App",
+  title: "Register | Auth Form App",
+  description: "Register page of Auth Form App",
 };
-
 const page = () => {
   return (
     <section className="grid h-dvh place-items-center">
       <Card className="w-sm">
         <CardHeader>
-          <CardTitle className="text-center text-2xl">Login</CardTitle>
+          <CardTitle className="text-center text-2xl">Register</CardTitle>
         </CardHeader>
         <CardContent>
-          <Login />
+          <Register />
         </CardContent>
       </Card>
     </section>
