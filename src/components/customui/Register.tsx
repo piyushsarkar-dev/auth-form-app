@@ -1,19 +1,24 @@
 "use client";
 
+import { registerAtom } from "@/lib/atom";
 import { registerSchema, RegisterSchemaType } from "@/lib/zodSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { LoaderIcon, SendIcon } from "lucide-react";
+import { useSetAtom } from "jotai";
+import { Loader, UserRoundPlus } from "lucide-react";
 import { Controller, useForm } from "react-hook-form";
+
 import { Button } from "../shadcnui/button";
 import { Field, FieldError, FieldLabel } from "../shadcnui/field";
 import { Input } from "../shadcnui/input";
 
 const Register = () => {
+  const setRegister = useSetAtom(registerAtom);
+
   const {
     handleSubmit,
     control,
     formState: { isSubmitting },
-  } = useForm({
+  } = useForm<RegisterSchemaType>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
       fullName: "",
@@ -22,84 +27,97 @@ const Register = () => {
     },
     mode: "all",
   });
-  const handleRegister = async (register: RegisterSchemaType) => {
-    await new Promise((Resolver) => setTimeout(Resolver, 1500));
-    console.log(register);
+
+  const handleRegister = async (data: RegisterSchemaType) => {
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+
+    setRegister(data);
+
+    console.log(data);
   };
 
   return (
-    <>
-      <form
-        className="grid gap-2"
-        noValidate
-        onSubmit={handleSubmit(handleRegister)}>
-        <Controller
-          name="fullName"
-          control={control}
-          render={({ field, fieldState }) => (
-            <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor={field.name}>Full Name</FieldLabel>
-              <Input
-                {...field}
-                id={field.name}
-                aria-invalid={fieldState.invalid}
-                placeholder="Enter Your Full Name"
-                autoComplete="name"
-              />
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-            </Field>
-          )}
-        />
-        <Controller
-          name="email"
-          control={control}
-          render={({ field, fieldState }) => (
-            <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor={field.name}>Email Adress</FieldLabel>
-              <Input
-                {...field}
-                id={field.name}
-                aria-invalid={fieldState.invalid}
-                placeholder="Enter Your Email Adress"
-                autoComplete="email"
-              />
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-            </Field>
-          )}
-        />
-        <Controller
-          name="password"
-          control={control}
-          render={({ field, fieldState }) => (
-            <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor={field.name}>Passowrd</FieldLabel>
-              <Input
-                {...field}
-                id={field.name}
-                aria-invalid={fieldState.invalid}
-                placeholder="Generate Your Password"
-                autoComplete="new-password"
-              />
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-            </Field>
-          )}
-        />
-        <Button
-          type="submit"
-          disabled={isSubmitting}>
-          {isSubmitting ?
-            <>
-              <LoaderIcon />
-              Submitting
-            </>
-          : <>
-              <SendIcon />
-              Submit
-            </>
-          }
-        </Button>
-      </form>
-    </>
+    <form
+      className="grid gap-2"
+      noValidate
+      onSubmit={handleSubmit(handleRegister)}>
+      <Controller
+        name="fullName"
+        control={control}
+        render={({ field, fieldState }) => (
+          <Field data-invalid={fieldState.invalid}>
+            <FieldLabel htmlFor={field.name}>Full Name</FieldLabel>
+
+            <Input
+              {...field}
+              id={field.name}
+              aria-invalid={fieldState.invalid}
+              placeholder="Enter Your Full Name"
+              autoComplete="name"
+            />
+
+            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+          </Field>
+        )}
+      />
+
+      <Controller
+        name="email"
+        control={control}
+        render={({ field, fieldState }) => (
+          <Field data-invalid={fieldState.invalid}>
+            <FieldLabel htmlFor={field.name}>Email Address</FieldLabel>
+
+            <Input
+              {...field}
+              id={field.name}
+              aria-invalid={fieldState.invalid}
+              placeholder="Enter Your Email Address"
+              autoComplete="email"
+            />
+
+            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+          </Field>
+        )}
+      />
+
+      <Controller
+        name="password"
+        control={control}
+        render={({ field, fieldState }) => (
+          <Field data-invalid={fieldState.invalid}>
+            <FieldLabel htmlFor={field.name}>Password</FieldLabel>
+
+            <Input
+              {...field}
+              type="password"
+              id={field.name}
+              aria-invalid={fieldState.invalid}
+              placeholder="Generate Your Password"
+              autoComplete="new-password"
+            />
+
+            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+          </Field>
+        )}
+      />
+
+      <Button
+        type="submit"
+        className="cursor-pointer"
+        disabled={isSubmitting}>
+        {isSubmitting ?
+          <>
+            <Loader className="animate-spin" />
+            Submitting
+          </>
+        : <>
+            <UserRoundPlus />
+            Register
+          </>
+        }
+      </Button>
+    </form>
   );
 };
 
